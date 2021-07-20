@@ -12,7 +12,7 @@ class soccer_match {
   soccer_match(this.category);
   static const headers = {
     'x-rapidapi-host': "api-football-v1.p.rapidapi.com",
-    'x-rapidapi-key': "a31bf74510msh24bd374a39ee3abp19aeddjsndfd87e3cddd2"
+    'x-rapidapi-key': ""
   };
   Future<List<SoccerMatch>> getAllMatches(
       Map<String, dynamic> queryMatches) async {
