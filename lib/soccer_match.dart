@@ -10,10 +10,7 @@ class soccer_match {
   final String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
   final category;
   soccer_match(this.category);
-  static const headers = {
-    'x-rapidapi-host': "api-football-v1.p.rapidapi.com",
-    'x-rapidapi-key': ""
-  };
+ 
   Future<List<SoccerMatch>> getAllMatches(
       Map<String, dynamic> queryMatches) async {
     var body;
@@ -25,8 +22,8 @@ class soccer_match {
     File fileMatches = File(tempDir.path + "/football" + tempMatches);
     try {
       Uri uri =
-          Uri.https('btcdoller.co', '/football/$category.php', queryMatches);
-      Response res = await get(uri, headers: headers);
+          Uri.https('footbal-linfo.li', '/football/$category.php', queryMatches);
+      Response res = await get(uri);
       if (res.body.isNotEmpty && res.body[0].isNotEmpty) {
         if (res.statusCode == 200) {
           fileMatches.writeAsStringSync(res.body,
@@ -48,8 +45,8 @@ class soccer_match {
             return matches;
           } else {
             Uri uri = Uri.https(
-                'btcdoller.co', '/football/$category.php', queryMatches);
-            Response res = await get(uri, headers: headers);
+                'footbal-linfo.li', '/football/$category.php', queryMatches);
+            Response res = await get(uri);
             if (res.statusCode == 200) {
               fileMatches.writeAsStringSync(res.body,
                   flush: true, mode: FileMode.write);
@@ -76,8 +73,8 @@ class soccer_match {
           return matches;
         } else {
           Uri uri = Uri.https(
-              'btcdoller.co', '/football/$category.php', queryMatches);
-          Response res = await get(uri, headers: headers);
+              'footbal-linfo.li', '/football/$category.php', queryMatches);
+          Response res = await get(uri);
           if (res.statusCode == 200) {
             fileMatches.writeAsStringSync(res.body,
                 flush: true, mode: FileMode.write);
@@ -104,8 +101,8 @@ class soccer_match {
         return matches;
       } else {
         Uri uri =
-            Uri.https('btcdoller.co', '/football/$category.php', queryMatches);
-        Response res = await get(uri, headers: headers);
+            Uri.https('footbal-linfo.li', '/football/$category.php', queryMatches);
+        Response res = await get(uri);
         if (res.statusCode == 200) {
           fileMatches.writeAsStringSync(res.body,
               flush: true, mode: FileMode.write);
