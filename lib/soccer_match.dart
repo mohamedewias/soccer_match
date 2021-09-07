@@ -6,11 +6,11 @@ import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
-class soccer_match {
+class SoccerMatchs {
   final String today = DateFormat('yyyy-MM-dd').format(DateTime.now());
   final category;
-  soccer_match(this.category);
- 
+  SoccerMatchs(this.category);
+
   Future<List<SoccerMatch>> getAllMatches(
       Map<String, dynamic> queryMatches) async {
     var body;
@@ -21,8 +21,8 @@ class soccer_match {
     var tempDir = await getApplicationDocumentsDirectory();
     File fileMatches = File(tempDir.path + "/football" + tempMatches);
     try {
-      Uri uri =
-          Uri.https('footbal-linfo.li', '/football/$category.php', queryMatches);
+      Uri uri = Uri.https(
+          'footbal-linfo.li', '/football/$category.php', queryMatches);
       Response res = await get(uri);
       if (res.body.isNotEmpty && res.body[0].isNotEmpty) {
         if (res.statusCode == 200) {
@@ -100,8 +100,8 @@ class soccer_match {
             .toList();
         return matches;
       } else {
-        Uri uri =
-            Uri.https('footbal-linfo.li', '/football/$category.php', queryMatches);
+        Uri uri = Uri.https(
+            'footbal-linfo.li', '/football/$category.php', queryMatches);
         Response res = await get(uri);
         if (res.statusCode == 200) {
           fileMatches.writeAsStringSync(res.body,
@@ -122,18 +122,13 @@ class soccer_match {
 }
 
 class SoccerMatch {
-  //here we will see the different data
-  //you will find every thing you need in the doc
-  //I'm not going to use every data, just few ones
-
   Fixture fixture;
   Team home;
   Team away;
   Goal goal;
   League league;
-  Score score;
-  SoccerMatch(
-      this.fixture, this.home, this.away, this.goal, this.league, this.score);
+  // Score score;
+  SoccerMatch(this.fixture, this.home, this.away, this.goal, this.league);
 
   factory SoccerMatch.fromJson(Map<String, dynamic> json) {
     return SoccerMatch(
@@ -142,7 +137,7 @@ class SoccerMatch {
       Team.fromJson(json['teams']['away']),
       Goal.fromJson(json['goals']),
       League.fromJson(json['league']),
-      Score.fromJson(json['league']),
+      // Score.fromJson(json['score']),
     );
   }
 }
@@ -152,17 +147,13 @@ class Score {
   Fulltime fulltime;
   Extratime extratime;
   Penalty penalty;
-  Score(
-      {required this.extratime,
-      required this.fulltime,
-      required this.halftime,
-      required this.penalty});
+  Score(this.extratime, this.fulltime, this.halftime, this.penalty);
   factory Score.fromJson(Map<String, dynamic> json) {
     return Score(
-      halftime: Halftime.fromJson(json['halftime']),
-      fulltime: Fulltime.fromJson(json['fulltime']),
-      extratime: Extratime.fromJson(json['extratime']),
-      penalty: Penalty.fromJson(json['Penalty']),
+      Extratime.fromJson(json['extratime']),
+      Fulltime.fromJson(json['fulltime']),
+      Halftime.fromJson(json['halftime']),
+      Penalty.fromJson(json['Penalty']),
     );
   }
 }
@@ -170,48 +161,48 @@ class Score {
 class Penalty {
   int home;
   int away;
-  Penalty({required this.home, required this.away});
+  Penalty(this.home, this.away);
 
   //Now we will create a factory method to copy the data from
   // the json file
   factory Penalty.fromJson(Map<String, dynamic> json) {
-    return Penalty(home: json['home'], away: json['away']);
+    return Penalty(json['home'], json['away']);
   }
 }
 
 class Extratime {
   int home;
   int away;
-  Extratime({required this.home, required this.away});
+  Extratime(this.home, this.away);
 
   //Now we will create a factory method to copy the data from
   // the json file
   factory Extratime.fromJson(Map<String, dynamic> json) {
-    return Extratime(home: json['home'], away: json['away']);
+    return Extratime(json['home'], json['away']);
   }
 }
 
 class Fulltime {
   int home;
   int away;
-  Fulltime({required this.home, required this.away});
+  Fulltime(this.home, this.away);
 
   //Now we will create a factory method to copy the data from
   // the json file
   factory Fulltime.fromJson(Map<String, dynamic> json) {
-    return Fulltime(home: json['home'], away: json['away']);
+    return Fulltime(json['home'], json['away']);
   }
 }
 
 class Halftime {
   int home;
   int away;
-  Halftime({required this.home, required this.away});
+  Halftime(this.home, this.away);
 
   //Now we will create a factory method to copy the data from
   // the json file
   factory Halftime.fromJson(Map<String, dynamic> json) {
-    return Halftime(home: json['home'], away: json['away']);
+    return Halftime(json['home'], json['away']);
   }
 }
 
@@ -224,26 +215,19 @@ class Fixture {
   Status status;
   Periods periods;
   Venue venue;
-  Fixture(
-      {required this.id,
-      required this.date,
-      required this.referee,
-      required this.timezone,
-      required this.timestamp,
-      required this.status,
-      required this.periods,
-      required this.venue});
+  Fixture(this.id, this.date, this.referee, this.timezone, this.timestamp,
+      this.status, this.periods, this.venue);
 
   factory Fixture.fromJson(Map<String, dynamic> json) {
     return Fixture(
-      id: json['id'],
-      date: json['date'],
-      referee: json['referee'],
-      timezone: json['timezone'],
-      timestamp: json['timestamp'],
-      status: Status.fromJson(json['status']),
-      periods: Periods.fromJson(json['periods']),
-      venue: Venue.fromJson(json['venue']),
+      json['id'],
+      json['date'],
+      json['referee'],
+      json['timezone'],
+      json['timestamp'],
+      Status.fromJson(json['status']),
+      Periods.fromJson(json['periods']),
+      Venue.fromJson(json['venue']),
     );
   }
 }
@@ -253,18 +237,10 @@ class Team {
   String name;
   String logoUrl;
   bool winner;
-  Team(
-      {required this.id,
-      required this.name,
-      required this.logoUrl,
-      required this.winner});
+  Team(this.id, this.name, this.logoUrl, this.winner);
 
   factory Team.fromJson(Map<String, dynamic> json) {
-    return Team(
-        id: json['id'],
-        name: json['name'],
-        logoUrl: json['logo'],
-        winner: json['winner']);
+    return Team(json['id'], json['name'], json['logo'], json['winner']);
   }
 }
 
@@ -272,22 +248,22 @@ class Team {
 class Goal {
   int home;
   int away;
-  Goal({required this.home, required this.away});
+  Goal(this.home, this.away);
 
   //Now we will create a factory method to copy the data from
   // the json file
   factory Goal.fromJson(Map<String, dynamic> json) {
-    return Goal(home: json['home'], away: json['away']);
+    return Goal(json['home'], json['away']);
   }
 }
 
 class Periods {
   int first;
   int second;
-  Periods({required this.first, required this.second});
+  Periods(this.first, this.second);
 
   factory Periods.fromJson(Map<String, dynamic> json) {
-    return Periods(first: json['first'], second: json['second']);
+    return Periods(json['first'], json['second']);
   }
 }
 
@@ -295,14 +271,14 @@ class Venue {
   int id;
   String name;
   String city;
-  Venue({
-    required this.id,
-    required this.name,
-    required this.city,
-  });
+  Venue(
+    this.id,
+    this.name,
+    this.city,
+  );
 
   factory Venue.fromJson(Map<String, dynamic> json) {
-    return Venue(id: json['id'], name: json['name'], city: json['city']);
+    return Venue(json['id'], json['name'], json['city']);
   }
 }
 
@@ -311,11 +287,10 @@ class Status {
   int elapsedTime;
   String long;
   String short;
-  Status({required this.elapsedTime, required this.long, required this.short});
+  Status(this.elapsedTime, this.long, this.short);
 
   factory Status.fromJson(Map<String, dynamic> json) {
-    return Status(
-        elapsedTime: json['elapsed'], long: json['long'], short: json['short']);
+    return Status(json['elapsed'], json['long'], json['short']);
   }
 }
 
@@ -327,23 +302,17 @@ class League {
   String flag;
   int season;
   String round;
-  League(
-      {required this.id,
-      required this.name,
-      required this.logo,
-      required this.flag,
-      required this.country,
-      required this.round,
-      required this.season});
+  League(this.id, this.name, this.country, this.logo, this.flag, this.season,
+      this.round);
   factory League.fromJson(Map<String, dynamic> json) {
     return League(
-      id: json['id'],
-      name: json['name'],
-      country: json['country'],
-      logo: json['logo'],
-      flag: json['flag'],
-      season: json['season'],
-      round: json['round'],
+      json['id'],
+      json['name'],
+      json['country'],
+      json['logo'],
+      json['flag'],
+      json['season'],
+      json['round'],
     );
   }
 }
